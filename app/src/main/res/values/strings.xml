@@ -2,4 +2,6 @@
     <string name="app_name">MovieApp</string>
 
     <string name="title_dialog_error">Error</string>
+    <string name="empty_title" />
+
 </resources>
