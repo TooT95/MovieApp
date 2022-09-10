@@ -9,6 +9,7 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.ItemGenreBinding
 import com.example.movieapp.extensions.inflateLayout
 import com.example.movieapp.model.Genre
+import timber.log.Timber
 
 class GenreListAdapter : ListAdapter<Genre, GenreListAdapter.GenreListHolder>(GenreDiffUtil()) {
 
@@ -26,6 +27,7 @@ class GenreListAdapter : ListAdapter<Genre, GenreListAdapter.GenreListHolder>(Ge
 
         private val binding = ItemGenreBinding.bind(view)
         fun onBind(genre: Genre) {
+            Timber.d("Bind genre ${genre.name}")
             binding.txtGenreName.text = genre.name
         }
 

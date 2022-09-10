@@ -5,20 +5,19 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.model.Genre
-import com.example.movieapp.repository.GenreRepository
+import com.example.movieapp.model.TV
+import com.example.movieapp.repository.TVRepository
 import com.example.movieapp.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class GenreListViewModel @Inject constructor(
-    private val repository: GenreRepository,
+class TVListViewModel @Inject constructor(
+    private val repository: TVRepository,
     application: Application,
 ) : AndroidViewModel(application) {
 
@@ -26,19 +25,20 @@ class GenreListViewModel @Inject constructor(
         toastMutableLiveData.postValue("on context $coroutineContext: ${throwable.message}")
     }
 
-    private val genreListMutableLiveData = MutableLiveData<List<Genre>>()
+    private val tvListMutableLiveData = MutableLiveData<List<TV>>()
     private val toastMutableLiveData = SingleLiveEvent<String>()
 
-    val genreListLiveData: LiveData<List<Genre>>
-        get() = genreListMutableLiveData
+    val tvListLiveData: LiveData<List<TV>>
+        get() = tvListMutableLiveData
     val toastLiveData: LiveData<String>
         get() = toastMutableLiveData
 
-    fun getGenreList() {
+    fun getPopularTVList() {
         viewModelScope.launch {
             withContext(Dispatchers.IO + exceptionScope) {
-                genreListMutableLiveData.postValue(repository.getGenreList())
+                tvListMutableLiveData.postValue(repository.getPopularTVList())
             }
         }
     }
+
 }
