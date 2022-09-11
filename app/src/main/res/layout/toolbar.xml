@@ -12,8 +12,7 @@
         android:background="@color/toolbar_font"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:menu="@menu/menu_main"
-        app:navigationIcon="@drawable/ic_menu"
+        app:navigationIcon="@drawable/ic_back"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 

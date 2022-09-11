@@ -2,6 +2,7 @@ package com.example.movieapp.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,6 +89,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun initUI() {
+        binding.inToolbar.toolbar.apply {
+            setNavigationIcon(R.drawable.ic_menu)
+            inflateMenu(R.menu.menu_main)
+        }
         initGenreLIst()
         initDiscoverLIst()
         initDiscoverList()
@@ -138,7 +143,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
         when (indexBySelected) {
             1 -> {
-                tvViewModel.getPopularTVList()
+                tvViewModel.getPopularTVList(null)
             }
             else -> movieViewModel.getPopularMovieList(null)
         }
@@ -150,7 +155,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         if (currentDiscoverList.isMovie())
             movieViewModel.getPopularMovieList(genre.id)
         else
-            tvViewModel.getPopularTVList()
+            tvViewModel.getPopularTVList(genre.id)
         initDiscoverList()
     }
 }
