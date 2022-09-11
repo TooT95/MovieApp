@@ -33,10 +33,10 @@ class MovieListViewModel @Inject constructor(
     val toastLiveData: LiveData<String>
         get() = toastMutableLiveData
 
-    fun getPopularMovieList() {
+    fun getPopularMovieList(genreId: Int?) {
         viewModelScope.launch {
             withContext(Dispatchers.IO + exceptionScope) {
-                movieListMutableLiveData.postValue(repository.getPopularMovieList())
+                movieListMutableLiveData.postValue(repository.getPopularMovieList(genreId))
             }
         }
     }

@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class MovieRepository @Inject constructor(private val movieApi: MovieApi) {
 
-    suspend fun getPopularMovieList(): List<Movie> {
-        return movieApi.getPopularMovieList().results
+    suspend fun getPopularMovieList(genreId: Int?): List<Movie> {
+        return movieApi.getPopularMovieList(genreId).results
     }
 
 }

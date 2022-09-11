@@ -13,7 +13,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,10 +33,18 @@ class GenreListViewModel @Inject constructor(
     val toastLiveData: LiveData<String>
         get() = toastMutableLiveData
 
-    fun getGenreList() {
+    fun getGenreMovieList() {
         viewModelScope.launch {
             withContext(Dispatchers.IO + exceptionScope) {
-                genreListMutableLiveData.postValue(repository.getGenreList())
+                genreListMutableLiveData.postValue(repository.getGenreMovieList())
+            }
+        }
+    }
+
+    fun getGenreTVList() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO + exceptionScope) {
+                genreListMutableLiveData.postValue(repository.getGenreTVList())
             }
         }
     }

@@ -6,6 +6,9 @@ import retrofit2.http.GET
 interface GenreApi {
 
     @GET("genre/movie/list")
-    suspend fun getGenreList():GenreWrapper
+    suspend fun getGenreMovieList():GenreWrapper
+
+    @GET("genre/tv/list")
+    suspend fun getGenreTVList():GenreWrapper
 
 }

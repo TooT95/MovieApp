@@ -11,8 +11,9 @@ import com.example.movieapp.adapter.GenreListAdapter
 import com.example.movieapp.adapter.MovieListAdapter
 import com.example.movieapp.adapter.TVListAdapter
 import com.example.movieapp.databinding.FragmentMainBinding
+import com.example.movieapp.extensions.isMovie
+import com.example.movieapp.extensions.selectedElement
 import com.example.movieapp.model.Discover
-import com.example.movieapp.utils.Utils
 import com.example.movieapp.viewmodel.GenreListViewModel
 import com.example.movieapp.viewmodel.MovieListViewModel
 import com.example.movieapp.viewmodel.TVListViewModel
@@ -22,26 +23,30 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
 
+    private var currentDiscoverList = listOf(
+        Discover("In Theaters", true),
+        Discover("On TV", false)
+    )
+
     private val genreViewModel: GenreListViewModel by viewModels()
     private val movieViewModel: MovieListViewModel by viewModels()
     private val tvViewModel: TVListViewModel by viewModels()
 
     private val discoverListAdapter: DiscoverListAdapter by lazy {
         DiscoverListAdapter {
-            when (it) {
-                1 -> tvViewModel.getPopularTVList()
-                else -> movieViewModel.getPopularMovieList()
-            }
-            initDiscoverList(Utils.currentDiscoverList[it])
+            onDiscoverItemClicked(it)
         }.apply {
-            submitList(Utils.currentDiscoverList)
+            submitList(currentDiscoverList)
         }
     }
     private val genreListAdapter: GenreListAdapter by lazy {
-        GenreListAdapter().apply {
+        GenreListAdapter {
+            onGenreItemClicked(it)
+        }.apply {
             submitList(emptyList())
         }
     }
+
     private val movieListAdapter: MovieListAdapter by lazy {
         MovieListAdapter {
             findNavController().navigate(R.id.action_mainFragment_to_movieFragment)
@@ -55,8 +60,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        genreViewModel.getGenreList()
-        movieViewModel.getPopularMovieList()
+        genreViewModel.getGenreMovieList()
+        movieViewModel.getPopularMovieList(null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,6 +73,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private fun observeViewModels() {
         genreViewModel.genreListLiveData.observe(viewLifecycleOwner) {
             Timber.d("Genre list size ${it.size}")
+            genreListAdapter.submitList(emptyList())
             genreListAdapter.submitList(it)
         }
         movieViewModel.movieListLiveData.observe(viewLifecycleOwner) {
@@ -84,10 +90,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private fun initUI() {
         initGenreLIst()
         initDiscoverLIst()
-        initDiscoverList(Utils.currentDiscoverList[0])
+        initDiscoverList()
     }
 
-    private fun initDiscoverList(discover: Discover) {
+    private fun initDiscoverList() {
+        val discover = currentDiscoverList.selectedElement()
         when (discover.name) {
             "In Theaters" -> with(binding.rvMovieList) {
                 adapter = movieListAdapter
@@ -121,4 +128,29 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         }
     }
 
+    private fun onDiscoverItemClicked(indexBySelected: Int) {
+        currentDiscoverList = currentDiscoverList.mapIndexed { index, discover ->
+            Discover(discover.name, (index == indexBySelected))
+        }
+        discoverListAdapter.submitList(currentDiscoverList)
+
+        if (currentDiscoverList.isMovie()) genreViewModel.getGenreMovieList() else genreViewModel.getGenreTVList()
+
+        when (indexBySelected) {
+            1 -> {
+                tvViewModel.getPopularTVList()
+            }
+            else -> movieViewModel.getPopularMovieList(null)
+        }
+        initDiscoverList()
+    }
+
+    private fun onGenreItemClicked(indexBySelected: Int) {
+        val genre = genreListAdapter.currentList[indexBySelected]
+        if (currentDiscoverList.isMovie())
+            movieViewModel.getPopularMovieList(genre.id)
+        else
+            tvViewModel.getPopularTVList()
+        initDiscoverList()
+    }
 }

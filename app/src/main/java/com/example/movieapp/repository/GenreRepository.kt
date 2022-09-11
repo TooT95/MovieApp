@@ -6,8 +6,12 @@ import javax.inject.Inject
 
 class GenreRepository @Inject constructor(private val genreApi: GenreApi) {
 
-    suspend fun getGenreList(): List<Genre> {
-        return genreApi.getGenreList().genres
+    suspend fun getGenreMovieList(): List<Genre> {
+        return genreApi.getGenreMovieList().genres
+    }
+
+    suspend fun getGenreTVList(): List<Genre> {
+        return genreApi.getGenreTVList().genres
     }
 
 }

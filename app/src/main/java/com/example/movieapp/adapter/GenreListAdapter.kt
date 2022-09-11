@@ -11,10 +11,11 @@ import com.example.movieapp.extensions.inflateLayout
 import com.example.movieapp.model.Genre
 import timber.log.Timber
 
-class GenreListAdapter : ListAdapter<Genre, GenreListAdapter.GenreListHolder>(GenreDiffUtil()) {
+class GenreListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
+    ListAdapter<Genre, GenreListAdapter.GenreListHolder>(GenreDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreListHolder {
-        return GenreListHolder(parent.inflateLayout(R.layout.item_genre))
+        return GenreListHolder(onItemClicked, parent.inflateLayout(R.layout.item_genre))
     }
 
     override fun onBindViewHolder(holder: GenreListHolder, position: Int) {
@@ -23,7 +24,15 @@ class GenreListAdapter : ListAdapter<Genre, GenreListAdapter.GenreListHolder>(Ge
 
     override fun getItemCount() = currentList.size
 
-    class GenreListHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class GenreListHolder(
+        private val onItemClicked: (itemId: Int) -> Unit, view: View
+    ) : RecyclerView.ViewHolder(view) {
+
+        init {
+            itemView.setOnClickListener {
+                onItemClicked(adapterPosition)
+            }
+        }
 
         private val binding = ItemGenreBinding.bind(view)
         fun onBind(genre: Genre) {
