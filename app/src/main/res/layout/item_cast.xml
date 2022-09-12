@@ -11,6 +11,7 @@
         android:layout_width="@dimen/default_cast_image_size"
         android:layout_height="@dimen/default_cast_image_size"
         app:cardCornerRadius="@dimen/genre_card_corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
