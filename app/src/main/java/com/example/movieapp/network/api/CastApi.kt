@@ -10,4 +10,7 @@ interface CastApi {
     @GET("movie/{movieId}/credits")
     suspend fun getCastListOfMovie(@Path("movieId") movieId: Long): CastWrapper<Cast>
 
+    @GET("tv/{tvId}/credits")
+    suspend fun getCastListOfTV(@Path("tvId") tvId: Long): CastWrapper<Cast>
+
 }

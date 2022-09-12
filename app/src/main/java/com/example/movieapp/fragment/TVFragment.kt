@@ -6,19 +6,18 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.adapter.CastListAdapter
 import com.example.movieapp.adapter.GenreListAdapter
-import com.example.movieapp.databinding.FragmentMovieBinding
+import com.example.movieapp.databinding.FragmentTvBinding
 import com.example.movieapp.extensions.getPathWithBaseUrl
-import com.example.movieapp.extensions.getRuntimeText
 import com.example.movieapp.extensions.glideImage
 import com.example.movieapp.model.Cast
-import com.example.movieapp.model.Movie
-import com.example.movieapp.viewmodel.MovieViewModel
+import com.example.movieapp.model.TV
+import com.example.movieapp.viewmodel.TVViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::inflate) {
+class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
 
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val tvViewModel: TVViewModel by viewModels()
     private val castListAdapter: CastListAdapter by lazy {
         CastListAdapter()
     }
@@ -26,9 +25,9 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            val movieId = it.getLong(MOVIE_ID_KEY)
-            movieViewModel.getMovie(movieId)
-            movieViewModel.getCastOfMovie(movieId)
+            val tVId = it.getLong(TV_ID_KEY)
+            tvViewModel.getTV(tVId)
+            tvViewModel.getCastOfTV(tVId)
         }
 
     }
@@ -52,30 +51,30 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     }
 
     private fun observeViewModel() {
-        movieViewModel.movieLiveData.observe(viewLifecycleOwner, ::initMovieUI)
-        movieViewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
-        movieViewModel.castListLiveData.observe(viewLifecycleOwner, ::initCastList)
+        tvViewModel.tvLiveData.observe(viewLifecycleOwner, ::initTVUI)
+        tvViewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
+        tvViewModel.castListLiveData.observe(viewLifecycleOwner, ::initCastList)
     }
 
-    private fun initMovieUI(it: Movie?) {
-        it?.let { movie ->
+    private fun initTVUI(it: TV?) {
+        it?.let { tv ->
             binding.apply {
                 ivMovieIcon.glideImage(requireContext(),
-                    movie.backdrop_path.getPathWithBaseUrl())
-                txtVoteAverage.text = movie.vote_average.toString()
-                txtVoteCount.text = movie.vote_count.toString()
-                txtMovieName.text = movie.title
-                txtReleaseDate.text = movie.release_date
-                txtRuntime.text = movie.runtime.getRuntimeText()
+                    tv.backdrop_path.getPathWithBaseUrl())
+                txtVoteAverage.text = tv.vote_average.toString()
+                txtVoteCount.text = tv.vote_count.toString()
+                txtMovieName.text = tv.name
+                txtReleaseDate.text = tv.first_air_date
+                txtRuntime.text = tv.episode_run_time?.joinToString(",")
                 with(rvGenreList) {
                     adapter = GenreListAdapter {}.apply {
-                        submitList(movie.genres)
+                        submitList(tv.genres)
                     }
                     layoutManager = LinearLayoutManager(requireContext(),
                         LinearLayoutManager.HORIZONTAL,
                         false)
                 }
-                txtTvOverview.text = movie.overview
+                txtTvOverview.text = tv.overview
             }
         }
     }
@@ -85,6 +84,6 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     }
 
     companion object {
-        const val MOVIE_ID_KEY = "movie id key"
+        const val TV_ID_KEY = "tv id key"
     }
 }

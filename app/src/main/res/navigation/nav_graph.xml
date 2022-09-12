@@ -13,9 +13,16 @@
         <action
             android:id="@+id/action_mainFragment_to_movieFragment"
             app:destination="@id/movieFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_TVFragment"
+            app:destination="@id/TVFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.movieapp.fragment.MovieFragment"
         android:label="MovieFragment" />
+    <fragment
+        android:id="@+id/TVFragment"
+        android:name="com.example.movieapp.fragment.TVFragment"
+        android:label="TVFragment" />
 </navigation>

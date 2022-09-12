@@ -58,7 +58,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
     private val tvListAdapter: TVListAdapter by lazy {
         TVListAdapter {
-            findNavController().navigate(R.id.action_mainFragment_to_movieFragment)
+            val args = Bundle().apply {
+                putLong(TVFragment.TV_ID_KEY, tvListAdapter.currentList[it].id)
+            }
+            findNavController().navigate(R.id.action_mainFragment_to_TVFragment, args)
         }
     }
 
