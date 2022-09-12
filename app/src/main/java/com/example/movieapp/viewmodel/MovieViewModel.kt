@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.movieapp.model.Cast
 import com.example.movieapp.model.Movie
 import com.example.movieapp.repository.MovieRepository
 import com.example.movieapp.utils.SingleLiveEvent
@@ -25,6 +26,7 @@ class MovieViewModel @Inject constructor(
     }
 
     private val movieMutableLiveData = MutableLiveData<Movie?>()
+    private val castListMutableLiveData = MutableLiveData<List<Cast>>()
     private val toastMutableLiveData = SingleLiveEvent<String>()
 
     val movieLiveData: LiveData<Movie?>
@@ -33,9 +35,18 @@ class MovieViewModel @Inject constructor(
     val toastLiveData: LiveData<String>
         get() = toastMutableLiveData
 
+    val castListLiveData: LiveData<List<Cast>>
+        get() = castListMutableLiveData
+
     fun getMovie(movieId: Long) {
         viewModelScope.launch(exceptionScope + Dispatchers.IO) {
             movieMutableLiveData.postValue(repository.getMovieById(movieId))
+        }
+    }
+
+    fun getCastOfMovie(movieId: Long) {
+        viewModelScope.launch(exceptionScope + Dispatchers.IO) {
+            castListMutableLiveData.postValue(repository.getCastOfMovie(movieId))
         }
     }
 }

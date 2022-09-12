@@ -1,5 +1,6 @@
 package com.example.movieapp.network
 
+import com.example.movieapp.network.api.CastApi
 import com.example.movieapp.network.api.GenreApi
 import com.example.movieapp.network.api.MovieApi
 import com.example.movieapp.network.api.TVApi
@@ -46,6 +47,11 @@ class NetworkModule {
     @Provides
     fun provideTVApi(retrofit: Retrofit): TVApi {
         return retrofit.create(TVApi::class.java)
+    }
+
+    @Provides
+    fun provideCastApi(retrofit: Retrofit): CastApi {
+        return retrofit.create(CastApi::class.java)
     }
 
 }

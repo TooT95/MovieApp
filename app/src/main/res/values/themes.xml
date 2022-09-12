@@ -49,6 +49,19 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="CustomHeadlineCast" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CustomHeadlineCharacter" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">serif</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
         <item name="cornerSizeBottomLeft">50dp</item>
     </style>

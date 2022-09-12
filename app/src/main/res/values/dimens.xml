@@ -11,4 +11,5 @@
     <dimen name="default_movie_icon_height">350dp</dimen>
     <dimen name="default_text_and_star_margin">6dp</dimen>
     <dimen name="default_vote_average_common_margin">2dp</dimen>
+    <dimen name="default_cast_image_size">80dp</dimen>
 </resources>

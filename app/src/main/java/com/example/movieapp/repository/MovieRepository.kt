@@ -4,12 +4,15 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.movieapp.model.Cast
 import com.example.movieapp.model.Movie
+import com.example.movieapp.network.api.CastApi
 import com.example.movieapp.network.api.MovieApi
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
     private val movieApi: MovieApi,
+    private val castApi: CastApi,
     private val application: Application,
 ) {
 
@@ -20,7 +23,7 @@ class MovieRepository @Inject constructor(
     }
 
     suspend fun getMovieById(movieId: Long): Movie? {
-        return if(networkAvailable(application))
+        return if (networkAvailable(application))
             movieApi.getMovieById(movieId)
         else null
     }
@@ -37,5 +40,11 @@ class MovieRepository @Inject constructor(
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
         }
+    }
+
+    suspend fun getCastOfMovie(movieId: Long): List<Cast> {
+        return if (networkAvailable(application))
+            castApi.getCastListOfMovie(movieId).cast
+        else emptyList()
     }
 }
