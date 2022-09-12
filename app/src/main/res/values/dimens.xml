@@ -5,4 +5,10 @@
     <dimen name="genre_card_elevation">20dp</dimen>
     <dimen name="item_movie_width">260dp</dimen>
     <dimen name="item_movie_height">380dp</dimen>
+    <dimen name="cardview_start_margin">32dp</dimen>
+
+    <dimen name="iv_cardview_margin">-50dp</dimen>
+    <dimen name="default_movie_icon_height">350dp</dimen>
+    <dimen name="default_text_and_star_margin">6dp</dimen>
+    <dimen name="default_vote_average_common_margin">2dp</dimen>
 </resources>

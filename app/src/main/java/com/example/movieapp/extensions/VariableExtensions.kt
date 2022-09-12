@@ -7,6 +7,10 @@ fun String.getPathWithBaseUrl(): String {
     return "${Utils.BASE_IMAGE_URL}$this"
 }
 
+fun Int.getRuntimeText():String{
+    return "${this/60}h ${this%60}min"
+}
+
 fun List<Discover>.isMovie(): Boolean {
     return this.filter {
         it.isSelected

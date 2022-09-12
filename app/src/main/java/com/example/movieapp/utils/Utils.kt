@@ -1,7 +1,5 @@
 package com.example.movieapp.utils
 
-import com.example.movieapp.model.Discover
-
 object Utils {
 
     const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"

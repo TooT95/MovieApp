@@ -11,4 +11,6 @@ interface MovieApi {
     @GET("discover/movie")
     suspend fun getPopularMovieList(@Query("with_genres") genreId: Int? = null): UniversalWrapper<Movie>
 
+    @GET("movie/{movieId}")
+    suspend fun getMovieById(@Path("movieId") movieId: Long): Movie
 }
