@@ -51,7 +51,6 @@
 
     <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
         <item name="cornerSizeBottomLeft">50dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
     <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">

@@ -33,7 +33,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     }
 
     private fun initUI() {
-        binding.inToolbar.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
     }
