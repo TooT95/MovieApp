@@ -57,6 +57,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
                             LinearLayoutManager.HORIZONTAL,
                             false)
                     }
+                    txtMovieOverview.text = movie.overview
                 }
             }
         }

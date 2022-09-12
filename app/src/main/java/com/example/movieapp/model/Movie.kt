@@ -10,4 +10,5 @@ data class Movie(
     val release_date: String,
     val runtime: Int,
     val genres: List<Genre>,
+    val overview:String,
 )

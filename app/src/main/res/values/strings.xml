@@ -3,4 +3,5 @@
     <string name="text_vote_common">/10</string>
     <string name="text_rate_this">Rate this</string>
     <string name="text_metascore">Metascore</string>
+    <string name="text_plot_summary">Plot Summary</string>
 </resources>
