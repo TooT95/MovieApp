@@ -59,11 +59,11 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
     private fun initTVUI(it: TV?) {
         it?.let { tv ->
             binding.apply {
-                ivMovieIcon.glideImage(requireContext(),
+                ivTvIcon.glideImage(requireContext(),
                     tv.backdrop_path.getPathWithBaseUrl())
                 txtVoteAverage.text = tv.vote_average.toString()
                 txtVoteCount.text = tv.vote_count.toString()
-                txtMovieName.text = tv.name
+                txtTvName.text = tv.name
                 txtReleaseDate.text = tv.first_air_date
                 txtRuntime.text = tv.episode_run_time?.joinToString(",")
                 with(rvGenreList) {
