@@ -1,9 +1,16 @@
 package com.example.movieapp.fragment
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
@@ -98,10 +105,58 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.inToolbar.toolbar.apply {
             setNavigationIcon(R.drawable.ic_menu)
             inflateMenu(R.menu.menu_main)
+            setOnMenuItemClickListener { menuItem ->
+                if (menuItem.itemId == R.id.item_search) {
+                    findNavController().navigate(R.id.action_mainFragment_to_searchMovieFragment)
+                }
+                return@setOnMenuItemClickListener false
+            }
+//            val searchView = (menu.findItem(R.id.item_search).actionView as SearchView)
+//            searchView.setOnQueryTextListener(object :
+//                SearchView.OnQueryTextListener {
+//                override fun onQueryTextSubmit(text: String?): Boolean {
+//                    Timber.d("onQueryTextSubmit $text")
+//                    return false
+//                }
+//
+//                override fun onQueryTextChange(text: String?): Boolean {
+//                    Timber.d("onQueryTextChange $text")
+//                    return false
+//                }
+//
+//            })
+//            searchView.setOnCloseListener {
+//                Timber.d("setOnCloseListener")
+//                return@setOnCloseListener false
+//            }
+//            searchView.setOnSearchClickListener {
+//                Timber.d("setOnSearchClickListener")
+//            }
         }
         initGenreLIst()
         initDiscoverLIst()
         initDiscoverList()
+    }
+
+    private fun menuItemSelected(menuItem: MenuItem) {
+        toast("item clicked ${menuItem.itemId}")
+        when (menuItem.itemId) {
+            R.id.item_search -> {
+                val searchView = menuItem.actionView as SearchView
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(text: String?): Boolean {
+                        Timber.d("onQueryTextSubmit $text")
+                        return false
+                    }
+
+                    override fun onQueryTextChange(text: String?): Boolean {
+                        Timber.d("onQueryTextChange $text")
+                        return false
+                    }
+
+                })
+            }
+        }
     }
 
     private fun initDiscoverList() {
