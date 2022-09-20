@@ -1,16 +1,11 @@
 package com.example.movieapp.fragment
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
@@ -87,14 +82,16 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private fun observeViewModels() {
         genreViewModel.genreListLiveData.observe(viewLifecycleOwner) {
             Timber.d("Genre list size ${it.size}")
-            genreListAdapter.submitList(emptyList())
             genreListAdapter.submitList(it)
+            showProgressBarGenre(false)
         }
         movieViewModel.movieListLiveData.observe(viewLifecycleOwner) {
             movieListAdapter.submitList(it)
+            showProgressBarMovie(false)
         }
         tvViewModel.tvListLiveData.observe(viewLifecycleOwner) {
             tvListAdapter.submitList(it)
+            showProgressBarMovie(false)
         }
         genreViewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
         movieViewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
@@ -136,6 +133,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         initGenreLIst()
         initDiscoverLIst()
         initDiscoverList()
+        showProgressBarGenre(true)
+        showProgressBarMovie(true)
     }
 
     private fun menuItemSelected(menuItem: MenuItem) {
@@ -195,6 +194,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun onDiscoverItemClicked(indexBySelected: Int) {
+        showProgressBarGenre(true)
+        showProgressBarMovie(true)
         currentDiscoverList = currentDiscoverList.mapIndexed { index, discover ->
             Discover(discover.name, (index == indexBySelected))
         }
@@ -212,11 +213,26 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun onGenreItemClicked(indexBySelected: Int) {
+        showProgressBarMovie(true)
         val genre = genreListAdapter.currentList[indexBySelected]
         if (currentDiscoverList.isMovie())
             movieViewModel.getPopularMovieList(genre.id)
         else
             tvViewModel.getPopularTVList(genre.id)
         initDiscoverList()
+    }
+
+    private fun showProgressBarGenre(show: Boolean) {
+        binding.apply {
+            pbGenreList.isVisible = show
+            rvGenreList.isVisible = !show
+        }
+    }
+
+    private fun showProgressBarMovie(show: Boolean) {
+        binding.apply {
+            pbMovieList.isVisible = show
+            rvMovieList.isVisible = !show
+        }
     }
 }

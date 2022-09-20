@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.movieapp.databinding.FragmentSearchBinding
 
+
 class SearchMovieFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -13,7 +14,6 @@ class SearchMovieFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBi
         mSearchView.isFocusable = true
         mSearchView.isIconified = false
         mSearchView.requestFocusFromTouch()
-
     }
 
     private fun initUI() {

@@ -16,6 +16,14 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <ProgressBar
+        android:id="@+id/pb_genre_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_discover_list" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_genre_list"
         android:layout_width="0dp"
@@ -23,9 +31,17 @@
         android:layout_marginTop="@dimen/default_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_discover_list">
+        app:layout_constraintTop_toBottomOf="@id/pb_genre_list">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/pb_movie_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_genre_list" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_movie_list"
@@ -35,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_genre_list">
+        app:layout_constraintTop_toBottomOf="@id/pb_movie_list">
 
     </androidx.recyclerview.widget.RecyclerView>
 
