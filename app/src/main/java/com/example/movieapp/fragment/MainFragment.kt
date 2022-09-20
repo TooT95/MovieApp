@@ -79,7 +79,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     private fun observeViewModels() {
         genreViewModel.genreListLiveData.observe(viewLifecycleOwner) {
-            Timber.d("Genre list size ${it.size}")
             genreListAdapter.submitList(it)
             showProgressBarGenre(false)
         }

@@ -36,7 +36,6 @@ class GenreListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
 
         private val binding = ItemGenreBinding.bind(view)
         fun onBind(genre: Genre) {
-            Timber.d("Bind genre ${genre.name}")
             binding.txtGenreName.text = genre.name
         }
 
