@@ -35,7 +35,9 @@ class CastListAdapter : ListAdapter<Cast, CastListAdapter.CastListHolder>(CastDi
         private val itemBinding = ItemCastBinding.bind(view)
         fun onBind(cast: Cast) {
             itemBinding.apply {
-                ivCastPoster.glideImage(itemView, cast.profile_path?.getPathWithBaseUrl() ?: "")
+                ivCastPoster.glideImage(itemView,
+                    cast.profile_path?.getPathWithBaseUrl() ?: "",
+                    R.drawable.ic_avatar)
                 txtCharacter.text = cast.character
                 txtName.text = cast.name
             }

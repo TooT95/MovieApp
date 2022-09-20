@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::inflate) {
 
+    private var movieId: Long = 0
     private val movieViewModel: MovieViewModel by viewModels()
     private val castListAdapter: CastListAdapter by lazy {
         CastListAdapter()
@@ -27,7 +28,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            val movieId = it.getLong(MOVIE_ID_KEY)
+            movieId = it.getLong(MOVIE_ID_KEY)
             movieViewModel.getMovie(movieId)
             movieViewModel.getCastOfMovie(movieId)
         }
@@ -102,6 +103,12 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
             pbCastList.isVisible = show
             rvCastList.isVisible = !show
         }
+    }
+
+    override fun viewCreated() {
+        super.viewCreated()
+        movieViewModel.getCastOfMovie(movieId)
+        movieViewModel.getMovie(movieId)
     }
 
 }

@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
 
+    private var tVId: Long = 0
     private val tvViewModel: TVViewModel by viewModels()
     private val castListAdapter: CastListAdapter by lazy {
         CastListAdapter()
@@ -26,7 +27,7 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            val tVId = it.getLong(TV_ID_KEY)
+            tVId = it.getLong(TV_ID_KEY)
             tvViewModel.getTV(tVId)
             tvViewModel.getCastOfTV(tVId)
         }
@@ -101,5 +102,11 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
             pbCastList.isVisible = show
             rvCastList.isVisible = !show
         }
+    }
+
+    override fun viewCreated() {
+        super.viewCreated()
+        tvViewModel.getTV(tVId)
+        tvViewModel.getCastOfTV(tVId)
     }
 }
