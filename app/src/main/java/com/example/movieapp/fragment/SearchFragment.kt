@@ -8,25 +8,36 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
-import com.example.movieapp.adapter.MovieSearchListAdapter
+import com.example.movieapp.adapter.SearchMovieListAdapter
+import com.example.movieapp.adapter.SearchTvListAdapter
 import com.example.movieapp.databinding.FragmentSearchBinding
-import com.example.movieapp.utils.autoCleared
 import com.example.movieapp.viewmodel.MovieListViewModel
+import com.example.movieapp.viewmodel.TVListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
-class SearchMovieFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
-    private val movieListAdapter: MovieSearchListAdapter by lazy{
-        MovieSearchListAdapter {
+    private val movieListAdapter: SearchMovieListAdapter by lazy {
+        SearchMovieListAdapter {
             val args = Bundle().apply {
                 putLong(MovieFragment.MOVIE_ID_KEY, movieListAdapter.currentList[it].id)
             }
             findNavController().navigate(R.id.action_searchMovieFragment_to_movieFragment, args)
         }
     }
+    private val tvListAdapter: SearchTvListAdapter by lazy {
+        SearchTvListAdapter {
+            val args = Bundle().apply {
+                putLong(TVFragment.TV_ID_KEY, tvListAdapter.currentList[it].id)
+            }
+            findNavController().navigate(R.id.action_searchMovieFragment_to_TVFragment, args)
+        }
+    }
     private val movieListViewModel: MovieListViewModel by viewModels()
+    private val tvListViewModel: TVListViewModel by viewModels()
+
+    private var isMovie: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,13 +50,23 @@ class SearchMovieFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBi
             showPbMovieList(false)
             movieListAdapter.submitList(it)
         }
+        tvListViewModel.tvListLiveData.observe(viewLifecycleOwner) {
+            showPbMovieList(false)
+            tvListAdapter.submitList(it)
+        }
         movieListViewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
     }
 
     private fun initUI() {
+        arguments?.let {
+            isMovie = it.getBoolean(MOVIE_TV, false)
+        }
         binding.apply {
             rvMovieList.apply {
-                adapter = movieListAdapter
+                adapter = if (isMovie)
+                    movieListAdapter
+                else
+                    tvListAdapter
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(requireContext())
             }
@@ -59,15 +80,16 @@ class SearchMovieFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBi
                     SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(text: String?): Boolean {
                         showPbMovieList(true)
-                        movieListViewModel.getMovieListByQueryText(text ?: "")
+                        if(isMovie)
+                            movieListViewModel.getMovieListByQueryText(text ?: "")
+                        else
+                            tvListViewModel.getTvListByQueryText(text ?: "")
                         return false
                     }
 
                     override fun onQueryTextChange(text: String?): Boolean {
-                        Timber.d("onQueryTextChange $text")
                         return false
                     }
-
                 })
             }
         }
@@ -78,6 +100,10 @@ class SearchMovieFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBi
             pbMovieList.isVisible = show
             rvMovieList.isVisible = !show
         }
+    }
+
+    companion object {
+        const val MOVIE_TV = "movie tv"
     }
 
 }

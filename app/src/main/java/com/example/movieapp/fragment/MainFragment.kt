@@ -102,7 +102,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             inflateMenu(R.menu.menu_main)
             setOnMenuItemClickListener { menuItem ->
                 if (menuItem.itemId == R.id.item_search) {
-                    findNavController().navigate(R.id.action_mainFragment_to_searchMovieFragment)
+                    val args = Bundle().apply {
+                        putBoolean(SearchFragment.MOVIE_TV, currentDiscoverList.isMovie())
+                    }
+                    findNavController().navigate(R.id.action_mainFragment_to_searchMovieFragment,
+                        args)
                 }
                 return@setOnMenuItemClickListener false
             }
@@ -113,6 +117,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         showProgressBarGenre(true)
         showProgressBarMovie(true)
     }
+
     private fun initDiscoverList() {
         val discover = currentDiscoverList.selectedElement()
         when (discover.name) {

@@ -29,4 +29,10 @@ class TVRepository @Inject constructor(
             castApi.getCastListOfTV(tvId).cast
         else emptyList()
     }
+
+    suspend fun getTvByQueryText(queryText: String): List<TV> {
+        return if (Utils.networkAvailable(application))
+            tvApi.getTvByQueryText(queryText).results
+        else emptyList()
+    }
 }

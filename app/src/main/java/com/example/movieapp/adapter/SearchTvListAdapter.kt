@@ -6,26 +6,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
-import com.example.movieapp.databinding.ItemListMovieTvBinding
+import com.example.movieapp.databinding.ItemSearchBinding
 import com.example.movieapp.extensions.getPathWithBaseUrl
 import com.example.movieapp.extensions.glideImage
 import com.example.movieapp.extensions.inflateLayout
 import com.example.movieapp.model.TV
 
-class TVListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
-    ListAdapter<TV, TVListAdapter.TVListHolder>(MovieDiffUtil()) {
+class SearchTvListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
+    ListAdapter<TV, SearchTvListAdapter.MovieListHolder>(TVDiffUtil()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVListHolder {
-        return TVListHolder(onItemClicked, parent.inflateLayout(R.layout.item_list_movie_tv))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder {
+        return MovieListHolder(onItemClicked, parent.inflateLayout(R.layout.item_search))
     }
 
-    override fun onBindViewHolder(holder: TVListHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieListHolder, position: Int) {
         holder.onBind(currentList[position])
     }
 
     override fun getItemCount() = currentList.size
 
-    class TVListHolder(private val onItemClicked: (itemId: Int) -> Unit, view: View) :
+    class MovieListHolder(private val onItemClicked: (itemId: Int) -> Unit, view: View) :
         RecyclerView.ViewHolder(view) {
 
         init {
@@ -34,16 +34,16 @@ class TVListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
             }
         }
 
-        private val binding = ItemListMovieTvBinding.bind(view)
-        fun onBind(TV: TV) {
-            binding.txtMovieName.text = TV.name
-            binding.ivMovieIcon.glideImage(itemView, TV.poster_path?.getPathWithBaseUrl() ?: "")
-            binding.txtRate.text = TV.vote_average.toString()
+        private val binding = ItemSearchBinding.bind(view)
+        fun onBind(tv: TV) {
+            binding.txtMovieName.text = tv.name
+            binding.ivMovieIcon.glideImage(itemView, tv.poster_path?.getPathWithBaseUrl() ?: "")
+            binding.txtRate.text = tv.vote_average.toString()
         }
 
     }
 
-    class MovieDiffUtil : DiffUtil.ItemCallback<TV>() {
+    class TVDiffUtil : DiffUtil.ItemCallback<TV>() {
         override fun areItemsTheSame(oldItem: TV, newItem: TV) = (oldItem.id == newItem.id)
 
         override fun areContentsTheSame(oldItem: TV, newItem: TV) = (oldItem == newItem)

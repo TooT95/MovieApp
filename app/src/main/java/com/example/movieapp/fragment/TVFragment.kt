@@ -2,6 +2,7 @@ package com.example.movieapp.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.adapter.CastListAdapter
@@ -39,6 +40,8 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
     }
 
     private fun initUI() {
+        showPbTV(true)
+        showPbCastList(true)
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
@@ -59,8 +62,9 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
     private fun initTVUI(it: TV?) {
         it?.let { tv ->
             binding.apply {
+                showPbTV(false)
                 ivTvIcon.glideImage(requireContext(),
-                    tv.backdrop_path.getPathWithBaseUrl())
+                    tv.backdrop_path?.getPathWithBaseUrl() ?: "")
                 txtVoteAverage.text = tv.vote_average.toString()
                 txtVoteCount.text = tv.vote_count.toString()
                 txtTvName.text = tv.name
@@ -80,10 +84,22 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
     }
 
     private fun initCastList(castList: List<Cast>) {
+        showPbCastList(false)
         castListAdapter.submitList(castList)
     }
 
     companion object {
         const val TV_ID_KEY = "tv id key"
+    }
+
+    private fun showPbTV(show: Boolean) {
+        binding.pbTv.isVisible = show
+    }
+
+    private fun showPbCastList(show: Boolean) {
+        binding.apply {
+            pbCastList.isVisible = show
+            rvCastList.isVisible = !show
+        }
     }
 }

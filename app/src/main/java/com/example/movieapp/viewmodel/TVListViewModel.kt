@@ -41,4 +41,11 @@ class TVListViewModel @Inject constructor(
         }
     }
 
+    fun getTvListByQueryText(text: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO + exceptionScope) {
+                tvListMutableLiveData.postValue(repository.getTvByQueryText(text))
+            }
+        }
+    }
 }

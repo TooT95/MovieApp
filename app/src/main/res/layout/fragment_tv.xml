@@ -211,6 +211,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ProgressBar
+                android:id="@+id/pb_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_about"
                 android:layout_width="0dp"
@@ -331,6 +339,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ProgressBar
+                    android:id="@+id/pb_cast_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_tv_cast" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cast_list"
                     android:layout_width="0dp"
@@ -338,7 +354,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_tv_cast" />
+                    app:layout_constraintTop_toBottomOf="@id/pb_cast_list" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

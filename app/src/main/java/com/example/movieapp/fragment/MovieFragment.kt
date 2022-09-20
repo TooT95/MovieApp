@@ -2,6 +2,7 @@ package com.example.movieapp.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.adapter.CastListAdapter
@@ -40,6 +41,8 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     }
 
     private fun initUI() {
+        showPbMovie(true)
+        showPbCastList(true)
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
@@ -60,8 +63,9 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     private fun initMovieUI(it: Movie?) {
         it?.let { movie ->
             binding.apply {
+                showPbMovie(false)
                 ivMovieIcon.glideImage(requireContext(),
-                    movie.backdrop_path?.getPathWithBaseUrl()?:"")
+                    movie.backdrop_path?.getPathWithBaseUrl() ?: "")
                 txtVoteAverage.text = movie.vote_average.toString()
                 txtVoteCount.text = movie.vote_count.toString()
                 txtMovieName.text = movie.title
@@ -81,10 +85,23 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     }
 
     private fun initCastList(castList: List<Cast>) {
+        showPbCastList(false)
         castListAdapter.submitList(castList)
     }
 
     companion object {
         const val MOVIE_ID_KEY = "movie id key"
     }
+
+    private fun showPbMovie(show: Boolean) {
+        binding.pbMovie.isVisible = show
+    }
+
+    private fun showPbCastList(show: Boolean) {
+        binding.apply {
+            pbCastList.isVisible = show
+            rvCastList.isVisible = !show
+        }
+    }
+
 }

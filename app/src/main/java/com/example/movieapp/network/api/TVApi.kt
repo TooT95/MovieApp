@@ -13,4 +13,7 @@ interface TVApi {
 
     @GET("tv/{tvId}")
     suspend fun getTvById(@Path("tvId") movieId: Long): TV?
+
+    @GET("search/tv")
+    suspend fun getTvByQueryText(@Query("query") queryText: String): UniversalWrapper<TV>
 }
