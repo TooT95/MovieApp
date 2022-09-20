@@ -31,4 +31,11 @@ class MovieRepository @Inject constructor(
             castApi.getCastListOfMovie(movieId).cast
         else emptyList()
     }
+
+    suspend fun getMovieByQueryText(queryText: String): List<Movie> {
+        return if (Utils.networkAvailable(application))
+            movieApi.getMovieByQueryText(queryText).results
+        else emptyList()
+    }
+
 }

@@ -32,5 +32,9 @@
     <fragment
         android:id="@+id/searchMovieFragment"
         android:name="com.example.movieapp.fragment.SearchMovieFragment"
-        android:label="SearchMovieFragment" />
+        android:label="SearchMovieFragment" >
+        <action
+            android:id="@+id/action_searchMovieFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+    </fragment>
 </navigation>

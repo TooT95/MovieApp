@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
-import com.example.movieapp.databinding.ItemListMovieTvBinding
+import com.example.movieapp.databinding.ItemSearchMovieBinding
 import com.example.movieapp.extensions.getPathWithBaseUrl
 import com.example.movieapp.extensions.glideImage
 import com.example.movieapp.extensions.inflateLayout
 import com.example.movieapp.model.Movie
 
-class MovieListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
-    ListAdapter<Movie, MovieListAdapter.MovieListHolder>(MovieDiffUtil()) {
+class MovieSearchListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
+    ListAdapter<Movie, MovieSearchListAdapter.MovieListHolder>(MovieDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder {
-        return MovieListHolder(onItemClicked, parent.inflateLayout(R.layout.item_list_movie_tv))
+        return MovieListHolder(onItemClicked, parent.inflateLayout(R.layout.item_search_movie))
     }
 
     override fun onBindViewHolder(holder: MovieListHolder, position: Int) {
@@ -34,7 +34,7 @@ class MovieListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
             }
         }
 
-        private val binding = ItemListMovieTvBinding.bind(view)
+        private val binding = ItemSearchMovieBinding.bind(view)
         fun onBind(movie: Movie) {
             binding.txtMovieName.text = movie.title
             binding.ivMovieIcon.glideImage(itemView, movie.poster_path?.getPathWithBaseUrl() ?: "")

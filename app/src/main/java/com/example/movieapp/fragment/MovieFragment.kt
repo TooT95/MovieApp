@@ -61,7 +61,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
         it?.let { movie ->
             binding.apply {
                 ivMovieIcon.glideImage(requireContext(),
-                    movie.backdrop_path.getPathWithBaseUrl())
+                    movie.backdrop_path?.getPathWithBaseUrl()?:"")
                 txtVoteAverage.text = movie.vote_average.toString()
                 txtVoteCount.text = movie.vote_count.toString()
                 txtMovieName.text = movie.title

@@ -13,4 +13,7 @@ interface MovieApi {
 
     @GET("movie/{movieId}")
     suspend fun getMovieById(@Path("movieId") movieId: Long): Movie
+
+    @GET("search/movie")
+    suspend fun getMovieByQueryText(@Query("query") queryText: String): UniversalWrapper<Movie>
 }

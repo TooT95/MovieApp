@@ -41,4 +41,12 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
+    fun getMovieListByQueryText(text: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO + exceptionScope) {
+                movieListMutableLiveData.postValue(repository.getMovieByQueryText(text))
+            }
+        }
+    }
+
 }

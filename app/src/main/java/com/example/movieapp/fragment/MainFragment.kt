@@ -1,9 +1,7 @@
 package com.example.movieapp.fragment
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -108,27 +106,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                 }
                 return@setOnMenuItemClickListener false
             }
-//            val searchView = (menu.findItem(R.id.item_search).actionView as SearchView)
-//            searchView.setOnQueryTextListener(object :
-//                SearchView.OnQueryTextListener {
-//                override fun onQueryTextSubmit(text: String?): Boolean {
-//                    Timber.d("onQueryTextSubmit $text")
-//                    return false
-//                }
-//
-//                override fun onQueryTextChange(text: String?): Boolean {
-//                    Timber.d("onQueryTextChange $text")
-//                    return false
-//                }
-//
-//            })
-//            searchView.setOnCloseListener {
-//                Timber.d("setOnCloseListener")
-//                return@setOnCloseListener false
-//            }
-//            searchView.setOnSearchClickListener {
-//                Timber.d("setOnSearchClickListener")
-//            }
         }
         initGenreLIst()
         initDiscoverLIst()
@@ -136,28 +113,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         showProgressBarGenre(true)
         showProgressBarMovie(true)
     }
-
-    private fun menuItemSelected(menuItem: MenuItem) {
-        toast("item clicked ${menuItem.itemId}")
-        when (menuItem.itemId) {
-            R.id.item_search -> {
-                val searchView = menuItem.actionView as SearchView
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(text: String?): Boolean {
-                        Timber.d("onQueryTextSubmit $text")
-                        return false
-                    }
-
-                    override fun onQueryTextChange(text: String?): Boolean {
-                        Timber.d("onQueryTextChange $text")
-                        return false
-                    }
-
-                })
-            }
-        }
-    }
-
     private fun initDiscoverList() {
         val discover = currentDiscoverList.selectedElement()
         when (discover.name) {
