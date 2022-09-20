@@ -77,6 +77,17 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         observeViewModels()
     }
 
+    override fun viewCreated() {
+        super.viewCreated()
+        if (currentDiscoverList.isMovie()) {
+            movieViewModel.getPopularMovieList(null)
+            genreViewModel.getGenreMovieList()
+        } else {
+            tvViewModel.getPopularTVList(null)
+            genreViewModel.getGenreTVList()
+        }
+    }
+
     private fun observeViewModels() {
         genreViewModel.genreListLiveData.observe(viewLifecycleOwner) {
             genreListAdapter.submitList(it)
@@ -194,4 +205,5 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             rvMovieList.isVisible = !show
         }
     }
+
 }
