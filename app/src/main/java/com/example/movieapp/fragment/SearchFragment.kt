@@ -61,8 +61,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         arguments?.let {
             isMovie = it.getBoolean(MOVIE_TV, false)
         }
-        binding.apply {
-            rvMovieList.apply {
+        with(binding) {
+            with(rvMovieList) {
                 adapter = if (isMovie)
                     movieListAdapter
                 else
@@ -80,7 +80,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                     SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(text: String?): Boolean {
                         showPbMovieList(true)
-                        if(isMovie)
+                        if (isMovie)
                             movieListViewModel.getMovieListByQueryText(text ?: "")
                         else
                             tvListViewModel.getTvListByQueryText(text ?: "")
@@ -96,7 +96,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun showPbMovieList(show: Boolean) {
-        binding.apply {
+        with(binding) {
             pbMovieList.isVisible = show
             rvMovieList.isVisible = !show
         }
@@ -104,6 +104,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     companion object {
         const val MOVIE_TV = "movie tv"
+    }
+
+    override fun viewCreated() {
+
     }
 
 }

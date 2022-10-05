@@ -47,7 +47,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-        binding.rvCastList.apply {
+        with(binding.rvCastList) {
             adapter = castListAdapter
             setHasFixedSize(true)
             layoutManager =
@@ -63,7 +63,7 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
 
     private fun initMovieUI(it: Movie?) {
         it?.let { movie ->
-            binding.apply {
+            with(binding) {
                 showPbMovie(false)
                 ivMovieIcon.glideImage(requireContext(),
                     movie.backdrop_path?.getPathWithBaseUrl() ?: "")
@@ -99,14 +99,13 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>(FragmentMovieBinding::i
     }
 
     private fun showPbCastList(show: Boolean) {
-        binding.apply {
+        with(binding) {
             pbCastList.isVisible = show
             rvCastList.isVisible = !show
         }
     }
 
     override fun viewCreated() {
-        super.viewCreated()
         movieViewModel.getCastOfMovie(movieId)
         movieViewModel.getMovie(movieId)
     }

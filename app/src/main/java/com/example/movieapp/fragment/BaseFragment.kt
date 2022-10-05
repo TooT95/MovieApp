@@ -10,10 +10,10 @@ import androidx.viewbinding.ViewBinding
 import com.example.movieapp.receiver.NetworkBroadcastReceiver
 import com.example.movieapp.utils.Utils
 
-open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInflater: LayoutInflater, container: ViewGroup?, attachToParent: Boolean) -> T) :
+abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInflater: LayoutInflater, container: ViewGroup?, attachToParent: Boolean) -> T) :
     Fragment() {
 
-    private var dialog: NetworkInfoFragment? = null
+    private var dialog: NetworkInfoDialogFragment? = null
     private var _binding: T? = null
     private var networkStateChanged = true
     val binding: T
@@ -63,8 +63,8 @@ open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInf
     }
 
     private fun openDialog() {
-        dialog = NetworkInfoFragment(::checkNetworkAndShowDialog)
-        dialog?.showNow(childFragmentManager, NetworkInfoFragment.TAG)
+        dialog = NetworkInfoDialogFragment(::checkNetworkAndShowDialog)
+        dialog?.showNow(childFragmentManager, NetworkInfoDialogFragment.TAG)
     }
 
     private fun checkNetworkAndShowDialog(onlyCheck: Boolean = false) {
@@ -76,5 +76,5 @@ open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInf
         }
     }
 
-    open fun viewCreated() {}
+    abstract fun viewCreated()
 }

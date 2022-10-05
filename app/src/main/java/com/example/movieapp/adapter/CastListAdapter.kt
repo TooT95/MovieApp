@@ -27,7 +27,7 @@ class CastListAdapter : ListAdapter<Cast, CastListAdapter.CastListHolder>(Object
 
         private val itemBinding = ItemCastBinding.bind(view)
         fun onBind(cast: Cast) {
-            itemBinding.apply {
+            with(itemBinding) {
                 ivCastPoster.glideImage(itemView,
                     cast.profile_path?.getPathWithBaseUrl().orEmpty(),
                     R.drawable.ic_avatar)

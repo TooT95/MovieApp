@@ -31,6 +31,7 @@ fun ImageView.glideImage(context: Context, url: String) {
     with(this) {
         Glide.with(context)
             .load(url)
+            .placeholder(R.drawable.ic_avatar)
             .into(this)
     }
 }

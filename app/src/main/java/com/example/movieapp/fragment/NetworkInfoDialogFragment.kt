@@ -5,7 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 
-class NetworkInfoFragment(private val showNetworkDialog:()->Unit) : DialogFragment() {
+class NetworkInfoDialogFragment(private val showNetworkDialog: () -> Unit) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AlertDialog.Builder(requireContext())

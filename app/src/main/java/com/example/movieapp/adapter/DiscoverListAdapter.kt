@@ -34,12 +34,14 @@ class DiscoverListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
 
         private val binding = ItemDiscoverBinding.bind(view)
         fun onBind(discover: Discover) {
-            binding.txtDiscoverTitle.text = discover.name
-            binding.ivRec.isVisible = discover.isSelected
-            if (discover.isSelected)
-                binding.txtDiscoverTitle.setTextAppearance(R.style.CustomHeadline1)
-            else binding.txtDiscoverTitle.setTextAppearance(
-                R.style.CustomHeadline2)
+            with(binding) {
+                txtDiscoverTitle.text = discover.name
+                ivRec.isVisible = discover.isSelected
+                if (discover.isSelected)
+                    txtDiscoverTitle.setTextAppearance(R.style.CustomHeadline1)
+                else txtDiscoverTitle.setTextAppearance(
+                    R.style.CustomHeadline2)
+            }
         }
 
     }

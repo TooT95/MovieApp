@@ -35,9 +35,11 @@ class SearchTvListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
 
         private val binding = ItemSearchBinding.bind(view)
         fun onBind(tv: TV) {
-            binding.txtMovieName.text = tv.name
-            binding.ivMovieIcon.glideImage(itemView, tv.poster_path?.getPathWithBaseUrl() ?: "")
-            binding.txtRate.text = tv.vote_average.toString()
+            with(binding) {
+                txtMovieName.text = tv.name
+                ivMovieIcon.glideImage(itemView, tv.poster_path?.getPathWithBaseUrl() ?: "")
+                txtRate.text = tv.vote_average.toString()
+            }
         }
 
     }

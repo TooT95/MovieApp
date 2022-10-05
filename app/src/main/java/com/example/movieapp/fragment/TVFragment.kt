@@ -46,7 +46,7 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-        binding.rvCastList.apply {
+        with(binding.rvCastList) {
             adapter = castListAdapter
             setHasFixedSize(true)
             layoutManager =
@@ -62,7 +62,7 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
 
     private fun initTVUI(it: TV?) {
         it?.let { tv ->
-            binding.apply {
+            with(binding) {
                 showPbTV(false)
                 ivTvIcon.glideImage(requireContext(),
                     tv.backdrop_path?.getPathWithBaseUrl() ?: "")
@@ -98,14 +98,13 @@ class TVFragment : BaseFragment<FragmentTvBinding>(FragmentTvBinding::inflate) {
     }
 
     private fun showPbCastList(show: Boolean) {
-        binding.apply {
+        with(binding) {
             pbCastList.isVisible = show
             rvCastList.isVisible = !show
         }
     }
 
     override fun viewCreated() {
-        super.viewCreated()
         tvViewModel.getTV(tVId)
         tvViewModel.getCastOfTV(tVId)
     }

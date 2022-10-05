@@ -35,9 +35,12 @@ class MovieListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
 
         private val binding = ItemListMovieTvBinding.bind(view)
         fun onBind(movie: Movie) {
-            binding.txtMovieName.text = movie.title
-            binding.ivMovieIcon.glideImage(itemView, movie.poster_path?.getPathWithBaseUrl() ?: "")
-            binding.txtRate.text = movie.vote_average.toString()
+            with(binding) {
+                txtMovieName.text = movie.title
+                ivMovieIcon.glideImage(itemView,
+                    movie.poster_path?.getPathWithBaseUrl() ?: "")
+                txtRate.text = movie.vote_average.toString()
+            }
         }
 
     }

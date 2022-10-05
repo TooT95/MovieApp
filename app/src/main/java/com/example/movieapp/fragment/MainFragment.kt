@@ -19,7 +19,6 @@ import com.example.movieapp.viewmodel.GenreListViewModel
 import com.example.movieapp.viewmodel.MovieListViewModel
 import com.example.movieapp.viewmodel.TVListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
@@ -78,7 +77,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     override fun viewCreated() {
-        super.viewCreated()
         if (currentDiscoverList.isMovie()) {
             movieViewModel.getPopularMovieList(null)
             genreViewModel.getGenreMovieList()
@@ -107,7 +105,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun initUI() {
-        binding.inToolbar.toolbar.apply {
+        with(binding.inToolbar.toolbar) {
             setNavigationIcon(R.drawable.ic_menu)
             inflateMenu(R.menu.menu_main)
             setOnMenuItemClickListener { menuItem ->
@@ -121,14 +119,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                 return@setOnMenuItemClickListener false
             }
         }
-        initGenreLIst()
         initDiscoverLIst()
-        initDiscoverList()
+        initGenreLIst()
+        initMovieTVList()
         showProgressBarGenre(true)
         showProgressBarMovie(true)
     }
 
-    private fun initDiscoverList() {
+    private fun initMovieTVList() {
         val discover = currentDiscoverList.selectedElement()
         when (discover.name) {
             "In Theaters" -> with(binding.rvMovieList) {
@@ -156,7 +154,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun initGenreLIst() {
-        binding.rvGenreList.apply {
+        with(binding.rvGenreList) {
             adapter = genreListAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -179,7 +177,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             }
             else -> movieViewModel.getPopularMovieList(null)
         }
-        initDiscoverList()
+        initMovieTVList()
     }
 
     private fun onGenreItemClicked(indexBySelected: Int) {
@@ -189,18 +187,18 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             movieViewModel.getPopularMovieList(genre.id)
         else
             tvViewModel.getPopularTVList(genre.id)
-        initDiscoverList()
+        initMovieTVList()
     }
 
     private fun showProgressBarGenre(show: Boolean) {
-        binding.apply {
+        with(binding) {
             pbGenreList.isVisible = show
             rvGenreList.isVisible = !show
         }
     }
 
     private fun showProgressBarMovie(show: Boolean) {
-        binding.apply {
+        with(binding) {
             pbMovieList.isVisible = show
             rvMovieList.isVisible = !show
         }

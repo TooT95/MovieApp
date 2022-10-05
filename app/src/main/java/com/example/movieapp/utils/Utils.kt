@@ -3,9 +3,11 @@ package com.example.movieapp.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.example.movieapp.BuildConfig
 
 object Utils {
 
+    const val DISCOVER_THEATRE_NAME = "In Theaters"
     const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
     const val API_KEY = "17abbcf1430dc572182b2a658146188d"
     const val BASE_URl = "https://api.themoviedb.org/3/"
