@@ -2,7 +2,6 @@ package com.example.movieapp.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
@@ -13,7 +12,7 @@ import com.example.movieapp.extensions.inflateLayout
 import com.example.movieapp.model.Movie
 
 class MovieListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
-    ListAdapter<Movie, MovieListAdapter.MovieListHolder>(MovieDiffUtil()) {
+    ListAdapter<Movie, MovieListAdapter.MovieListHolder>(ObjectDiffUtil<Movie>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder {
         return MovieListHolder(onItemClicked, parent.inflateLayout(R.layout.item_list_movie_tv))
@@ -43,10 +42,4 @@ class MovieListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
 
     }
 
-    class MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie) = (oldItem.id == newItem.id)
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie) = (oldItem == newItem)
-
-    }
 }

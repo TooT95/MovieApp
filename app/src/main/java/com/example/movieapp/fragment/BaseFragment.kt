@@ -15,6 +15,7 @@ open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInf
 
     private var dialog: NetworkInfoFragment? = null
     private var _binding: T? = null
+    private var networkStateChanged = true
     val binding: T
         get() = _binding!!
 
@@ -34,10 +35,16 @@ open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInf
         networkReceiver.registerNetworkCallback()
         networkReceiver.networkAvailableLiveData.observe(viewLifecycleOwner) { networkAvailable ->
             if (networkAvailable) {
+                if (networkStateChanged) {
+                    viewCreated()
+                    networkStateChanged = !networkStateChanged
+                }
                 dialog?.dismiss()
-                viewCreated()
-            } else
+            } else {
                 openDialog()
+                networkStateChanged = true
+            }
+
         }
     }
 
@@ -52,7 +59,7 @@ open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInf
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkNetworkAndShowDialog()
+        checkNetworkAndShowDialog(true)
     }
 
     private fun openDialog() {
@@ -60,11 +67,12 @@ open class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInf
         dialog?.showNow(childFragmentManager, NetworkInfoFragment.TAG)
     }
 
-    private fun checkNetworkAndShowDialog() {
+    private fun checkNetworkAndShowDialog(onlyCheck: Boolean = false) {
         if (!Utils.networkAvailable(requireContext())) {
             openDialog()
         } else {
-            viewCreated()
+            if (!onlyCheck)
+                viewCreated()
         }
     }
 

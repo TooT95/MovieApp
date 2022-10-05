@@ -2,7 +2,6 @@ package com.example.movieapp.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
@@ -13,7 +12,7 @@ import com.example.movieapp.extensions.inflateLayout
 import com.example.movieapp.model.TV
 
 class SearchTvListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
-    ListAdapter<TV, SearchTvListAdapter.MovieListHolder>(TVDiffUtil()) {
+    ListAdapter<TV, SearchTvListAdapter.MovieListHolder>(ObjectDiffUtil<TV>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder {
         return MovieListHolder(onItemClicked, parent.inflateLayout(R.layout.item_search))
@@ -40,13 +39,6 @@ class SearchTvListAdapter(private val onItemClicked: (itemId: Int) -> Unit) :
             binding.ivMovieIcon.glideImage(itemView, tv.poster_path?.getPathWithBaseUrl() ?: "")
             binding.txtRate.text = tv.vote_average.toString()
         }
-
-    }
-
-    class TVDiffUtil : DiffUtil.ItemCallback<TV>() {
-        override fun areItemsTheSame(oldItem: TV, newItem: TV) = (oldItem.id == newItem.id)
-
-        override fun areContentsTheSame(oldItem: TV, newItem: TV) = (oldItem == newItem)
 
     }
 }
