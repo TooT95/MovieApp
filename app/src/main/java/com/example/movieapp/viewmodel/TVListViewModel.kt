@@ -33,19 +33,15 @@ class TVListViewModel @Inject constructor(
     val toastLiveData: LiveData<String>
         get() = toastMutableLiveData
 
-    fun getPopularTVList(genreId:Int?) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO + exceptionScope) {
-                tvListMutableLiveData.postValue(repository.getPopularTVList(genreId))
-            }
+    fun getPopularTVList(genreId: Int?) {
+        viewModelScope.launch((Dispatchers.IO + exceptionScope)) {
+            tvListMutableLiveData.postValue(repository.getPopularTVList(genreId))
         }
     }
 
     fun getTvListByQueryText(text: String) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO + exceptionScope) {
-                tvListMutableLiveData.postValue(repository.getTvByQueryText(text))
-            }
+        viewModelScope.launch(Dispatchers.IO + exceptionScope) {
+            tvListMutableLiveData.postValue(repository.getTvByQueryText(text))
         }
     }
 }

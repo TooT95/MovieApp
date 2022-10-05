@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.movieapp.receiver.NetworkBroadcastReceiver
 import com.example.movieapp.utils.Utils
+import timber.log.Timber
 
 abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layoutInflater: LayoutInflater, container: ViewGroup?, attachToParent: Boolean) -> T) :
     Fragment() {
@@ -54,6 +55,7 @@ abstract class BaseFragment<T : ViewBinding>(private val bindingInflater: (layou
     }
 
     fun toast(text: String) {
+        Timber.d("toast $text")
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 

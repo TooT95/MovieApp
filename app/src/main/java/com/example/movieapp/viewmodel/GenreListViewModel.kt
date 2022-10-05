@@ -34,18 +34,14 @@ class GenreListViewModel @Inject constructor(
         get() = toastMutableLiveData
 
     fun getGenreMovieList() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO + exceptionScope) {
-                genreListMutableLiveData.postValue(repository.getGenreMovieList())
-            }
+        viewModelScope.launch(Dispatchers.IO + exceptionScope) {
+            genreListMutableLiveData.postValue(repository.getGenreMovieList())
         }
     }
 
     fun getGenreTVList() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO + exceptionScope) {
-                genreListMutableLiveData.postValue(repository.getGenreTVList())
-            }
+        viewModelScope.launch(Dispatchers.IO + exceptionScope) {
+            genreListMutableLiveData.postValue(repository.getGenreTVList())
         }
     }
 }
